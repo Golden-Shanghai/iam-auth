@@ -2,7 +2,6 @@
 
 use Illuminate\Routing\Router;
 use Ze\IAMAuth\Http\Controllers\Api\UserController;
-use Ze\IAMAuth\Controllers\Api\OrganizationController;
 
 // 提供给IAM-TIM的对外接口，接口path严格按照文档命名
 Route::group([
