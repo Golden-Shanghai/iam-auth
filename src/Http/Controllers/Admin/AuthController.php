@@ -88,6 +88,7 @@ class AuthController extends Controller
         $response = \IAMOauth::getToken($code);
 
         $accessToken = $response['access_token'];
+
 //        $refreshToken = $response['refresh_token'];
 //        $uid = $response['uid'];
 //        $expiresIn = $response['expires_in'];
