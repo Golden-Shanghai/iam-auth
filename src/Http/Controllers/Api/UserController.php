@@ -24,12 +24,12 @@ class UserController
     {
         try {
             $userInfo = $request->validate([
+                // uid
+                'id'       => 'required|string',
                 // 账号
-                'loginName' => 'required|string',
-                // 组织id
-                'orgId'     => 'required|string',
+                'username' => 'required|string',
                 // 姓名
-                'fullName'  => 'required|string',
+                'name'     => 'required|string',
             ]);
 
             return iamOk(['uid' => UserBusiness::addNewUser($userInfo)]);

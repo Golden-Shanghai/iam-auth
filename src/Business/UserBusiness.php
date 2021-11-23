@@ -91,27 +91,24 @@ class UserBusiness
     {
         // 先查用户是否已存在
         $userModel = config('admin.database.users_model');
-        $userId = $userModel::where('username', $userInfo['loginName'])->value('id');
+
+        $userId = $userModel::where('username', $userInfo['username'])->value('id');
 
         if ($userId && AdminUserThirdPfBind::getBindRelationByUid(AdminUserThirdPfBind::IAM_PLATFORM, $userId)) {
             iamThrow(IAMOauthException::USER_CREATE_ERROR, '用户已存在');
         }
 
-        // uid生成器（确保唯一）
-        do {
-            $uid = (string) \Str::uuid();
-        } while (! $uid || AdminUserThirdPfBind::where('third_user_id', $uid)->count());
 
         $userInfo = [
-            'uid'         => $uid,
-            'loginName'   => $userInfo['loginName'],
-            'displayName' => $userInfo['fullName']
+            'uid'         => $userInfo['id'],
+            'loginName'   => $userInfo['username'],
+            'displayName' => $userInfo['name']
         ];
 
         // 关联账户
         \IAMPassport::getUserByThird($userInfo, true);
 
-        return $uid;
+        return $userInfo['id'];
     }
 
     // 账号编辑
