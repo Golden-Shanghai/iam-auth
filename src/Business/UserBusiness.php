@@ -123,7 +123,7 @@ class UserBusiness
             iamThrow(IAMOauthException::USER_UPDATE_ERROR, '要修改的用户在此系统不存在');
         }
 
-        if ($userInfo['username']) {
+        if (! empty($userInfo['username'])) {
             // 判断下登录账号是否存在重复
             $userModel = config('admin.database.users_model');
 
