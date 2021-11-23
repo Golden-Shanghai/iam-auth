@@ -123,17 +123,18 @@ class UserBusiness
             iamThrow(IAMOauthException::USER_UPDATE_ERROR, '要修改的用户在此系统不存在');
         }
 
-        // 判断下登录账号是否存在重复
-        $userModel = config('admin.database.users_model');
+        if ($userInfo['username']) {
+            // 判断下登录账号是否存在重复
+            $userModel = config('admin.database.users_model');
 
-        if ($userModel::where([['username', '=', $userInfo['username']], ['id', '<>', $relationUser->user->id]])->first()) {
-            iamThrow(IAMOauthException::USER_UPDATE_ERROR, '修改的账号名已存在，请更换');
+            if ($userModel::where([['username', '=', $userInfo['username']], ['id', '<>', $relationUser->user->id]])->first()) {
+                iamThrow(IAMOauthException::USER_UPDATE_ERROR, '修改的账号名已存在，请更换');
+            }
         }
 
-        return $relationUser->user->update([
-            'username' => $userInfo['username'],
-            'name'     => $userInfo['name']
-        ]);
+        unset($userInfo['bimUid']);
+
+        return $relationUser->user->update(array_filter($userInfo));
     }
 
     // 删除用户

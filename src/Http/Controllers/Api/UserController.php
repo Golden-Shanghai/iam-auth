@@ -47,9 +47,9 @@ class UserController
                 // uid
                 'bimUid'   => 'required|string',
                 // 登录账号
-                'username' => 'required|string',
+                'username' => 'nullable|string',
                 // 姓名
-                'name'     => 'required|string',
+                'name'     => 'nullable|string',
             ]);
 
             UserBusiness::editUser($userInfo);
