@@ -108,7 +108,7 @@ class UserBusiness
         // 关联账户
         \IAMPassport::getUserByThird($userInfo, true);
 
-        return $userInfo['id'];
+        return $userInfo['uid'];
     }
 
     // 账号编辑
