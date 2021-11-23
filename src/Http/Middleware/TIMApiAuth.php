@@ -15,12 +15,12 @@ class TIMApiAuth
             // 必传公共参数验证
             $params = $request->validate([
                 'bimRequestId'  => 'required|string',
-                'binRemoteUser' => 'required|string',
-                'binRemotePwd'  => 'required|string',
+                'bimRemoteUser' => 'required|string',
+                'bimRemotePwd'  => 'required|string',
             ]);
 
-            if ($params['binRemoteUser'] != config('iam.apis.tim_api.remote_user') ||
-                $params['binRemotePwd'] != config('iam.apis.tim_api.remote_pwd')) {
+            if ($params['bimRemoteUser'] != config('iam.apis.tim_api.remote_user') ||
+                $params['bimRemotePwd'] != config('iam.apis.tim_api.remote_pwd')) {
 
                 iamThrow(IAMOauthException::LOGIN_ERROR, '账号密码不正确');
             }
