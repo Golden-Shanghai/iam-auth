@@ -45,11 +45,11 @@ class UserController
         try {
             $userInfo = $request->validate([
                 // uid
-                'bimUid'    => 'required|string',
+                'bimUid'   => 'required|string',
                 // 登录账号
-                'loginName' => 'required|string',
+                'username' => 'required|string',
                 // 姓名
-                'fullName'  => 'required|string',
+                'name'     => 'required|string',
             ]);
 
             UserBusiness::editUser($userInfo);
