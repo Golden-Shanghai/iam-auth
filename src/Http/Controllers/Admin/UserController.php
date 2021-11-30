@@ -57,7 +57,7 @@ class UserController extends BaseUserController
                 }
 
                 // 同步用户资料
-                $form->name     = $goldenUsers[$goldenUid]['fullname'];
+                $form->name = $goldenUsers[$goldenUid]['fullname'];
                 $form->username = $goldenUsers[$goldenUid]['username'];
                 $form->avatar = '';
                 $form->password = '';
@@ -84,7 +84,7 @@ class UserController extends BaseUserController
     // 获取所有高灯员工列表
     protected static function fetchGoldenPassportUids()
     {
-        $users =  \IAMPassport::allUsers();
+        $users = \IAMPassport::allUsers();
 
         // 替换key为uid
         return array_combine(array_column($users, 'userId'), $users);

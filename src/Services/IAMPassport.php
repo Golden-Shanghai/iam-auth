@@ -105,7 +105,7 @@ class IAMPassport
     }
 
     // 全量三方用户接口
-    public function allUsers($username)
+    public function allUsers($username = '')
     {
         $postParams = [
             'systemCode' => config('iam.services.iam_oauth.system_code'),
@@ -113,7 +113,7 @@ class IAMPassport
             'username'   => $username
         ];
 
-        return  $this->post(self::GET_USERS_URL, $postParams);
+        return $this->post(self::GET_USERS_URL, $postParams);
     }
 
     // post请求,并处理可能异常
@@ -121,10 +121,10 @@ class IAMPassport
     {
         $response = guzHttpRequest($this->domain . $path, $query, 'POST');
 
-        if(! ($response['success'] ?? false)) {
-            throw new IAMOauthException($response['errorMessage'],$response['errorCode']);
+        if (! ($response['success'] ?? false)) {
+            throw new IAMOauthException($response['errorMessage'], $response['errorCode']);
         }
 
-        return !empty($response['data']) ? $response['data'] : $response;
+        return ! empty($response['data']) ? $response['data'] : $response;
     }
 }
