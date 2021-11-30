@@ -18,7 +18,7 @@ return [
             // 目标系统代码
             'system_code'  => 'test_code',
             // 目标系统安全密钥
-            'secret_key'    => 'test_secret_key',
+            'secret_key'    => 'test_secret_key'
         ],
 
     ],
@@ -38,7 +38,7 @@ return [
             // 授权账号
             'remote_user' => 'TIMadmin',
             // 授权密码
-            'remote_pwd'  => 'TIMadmin',
+            'remote_pwd'  => 'TIMadmin'
         ]
 
     ]
