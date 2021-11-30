@@ -43,7 +43,7 @@ class IAMAuthServiceProvider extends ServiceProvider
 
         // 服务注册
         $this->app->singleton('iam-passport', function ($app) {
-            return new IAMPassport();
+            return new IAMPassport($app['config']['iam']['services']['iam_oauth']);
         });
 
 

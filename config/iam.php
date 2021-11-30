@@ -14,7 +14,11 @@ return [
             // OAuth-secret
             'client_secret' => 'test_secret',
             // oauth目标域名
-            'domain'        => 'http://iam-test.com'
+            'domain'        => 'http://iam-test.com',
+            // 目标系统代码
+            'system_code'  => 'test_code',
+            // 目标系统安全密钥
+            'secret_key'    => 'test_secret_key',
         ],
 
     ],

@@ -20,15 +20,14 @@ class UserController extends BaseUserController
 
         $form->display('id', 'ID');
 
-//        $goldenUsers = self::fetchGoldenPassportUids();
+        $goldenUsers = self::fetchGoldenPassportUids();
 
         if ($form->isCreating()) {
-//            $form->select('golden_uid', '高灯账号')
-//                ->options(\Arr::pluck($goldenUsers, 'fullname', 'id'))
-//                ->rules('required');
-//            $form->hidden('name');
-//            $form->hidden('username');
-
+            $form->select('golden_uid', '高灯账号')
+                ->options(\Arr::pluck($goldenUsers, 'fullname', 'userId'))
+                ->rules('required');
+            $form->hidden('name');
+            $form->hidden('username');
 
             $form->text('name', '账号')->rules('required');
             $form->text('username', '姓名')->rules('required');
@@ -48,7 +47,7 @@ class UserController extends BaseUserController
 
         $form->display('created_at', trans('admin.created_at'));
 
-        $form->saving(function (Form $form) {
+        $form->saving(function (Form $form) use ($goldenUsers) {
 
             if ($goldenUid = request('golden_uid')) {
 
@@ -58,9 +57,8 @@ class UserController extends BaseUserController
                 }
 
                 // 同步用户资料
-//                $form->name     = $goldenUsers[$goldenUid]['name'];
-//                $form->username = $goldenUsers[$goldenUid]['username'];
-//                $form->avatar   = $goldenUsers[$goldenUid]['avatar_url'];
+                $form->name     = $goldenUsers[$goldenUid]['fullname'];
+                $form->username = $goldenUsers[$goldenUid]['username'];
                 $form->avatar = '';
                 $form->password = '';
             }
@@ -83,9 +81,12 @@ class UserController extends BaseUserController
         return $form;
     }
 
-    // todo 获取所有高灯员工列表[竹云那边还没写完这个接口。]
+    // 获取所有高灯员工列表
     protected static function fetchGoldenPassportUids()
     {
-//        $goldenUsers = \IAMPassport::allUsers();
+        $users =  \IAMPassport::allUsers();
+
+        // 替换key为uid
+        return array_combine(array_column($users, 'userId'), $users);
     }
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Ze\IAMAuth\Services;
-
 
 use Ze\IAMAuth\Exceptions\IAMOauthException;
 use Ze\IAMAuth\Models\AdminUserThirdPfBind;
@@ -10,6 +8,20 @@ use Ze\IAMAuth\Models\AdminUserThirdPfBind;
 class IAMPassport
 {
     const SOURCE = '高灯应用集中安全访问导航平台';
+
+    const GET_USERS_URL = '/bim-server/api/rest/customization/ExtApiCustTargetUserQueryService/queryUser',
+        GET_ORGANIZATIONS_URL = '/bim-server/api/rest/customization/ExtApiCustTargetOrganizationQueryService/queryOrganization';
+
+    protected $domain;
+    protected $systemCode;
+    protected $secretKey;
+
+    public function __construct(array $config)
+    {
+        $this->domain = $config['domain'];
+        $this->systemCode = $config['system_code'];
+        $this->secretKey = $config['secret_key'];
+    }
 
     // 根据第三方用户信息获取我方用户信息,并自动创建关联
     public function getUserByThird(array $userInfo, bool $autoCreate = false)
@@ -90,5 +102,29 @@ class IAMPassport
     public function getSource()
     {
         return self::SOURCE;
+    }
+
+    // 全量三方用户接口
+    public function allUsers($username)
+    {
+        $postParams = [
+            'systemCode' => config('iam.services.iam_oauth.system_code'),
+            'secretKey'  => config('iam.services.iam_oauth.secret_key'),
+            'username'   => $username
+        ];
+
+        return  $this->post(self::GET_USERS_URL, $postParams);
+    }
+
+    // post请求,并处理可能异常
+    private function post(string $path, array $query)
+    {
+        $response = guzHttpRequest($this->domain . $path, $query, 'POST');
+
+        if(! ($response['success'] ?? false)) {
+            throw new IAMOauthException($response['errorMessage'],$response['errorCode']);
+        }
+
+        return !empty($response['data']) ? $response['data'] : $response;
     }
 }
