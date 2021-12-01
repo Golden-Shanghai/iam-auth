@@ -27,7 +27,7 @@ composer require ze/iam-auth
 ### 发布配置
 
 ```shell
- php artisan vendor:publish --provider=\Ze\IAMAuth\IAMAuthServiceProvider
+php artisan vendor:publish --provider=\Ze\IAMAuth\IAMAuthServiceProvider
 ```
 
 ### 若admin_users_third_pf_bind表不存在，则生成数据表
