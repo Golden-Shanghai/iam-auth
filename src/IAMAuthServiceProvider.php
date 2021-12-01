@@ -3,6 +3,7 @@
 namespace Ze\IAMAuth;
 
 use Illuminate\Support\ServiceProvider;
+use Ze\IAMAuth\Commands\SyncUsersFromIam;
 use Ze\IAMAuth\Services\IAMPassport;
 use Ze\IAMAuth\Services\OAuthAuthentication;
 
@@ -22,9 +23,11 @@ class IAMAuthServiceProvider extends ServiceProvider
             $this->loadViewsFrom($views, 'iam-auth');
         }
 
-        // 配置文件注册
         if ($this->app->runningInConsole()) {
+            // 配置文件注册
             $this->publishes([__DIR__ . '/../config' => config_path()], 'iam-auth');
+            // 命令行注册
+            $this->commands([SyncUsersFromIam::class]);
         }
 
         // 路由注册
