@@ -28,9 +28,6 @@ class UserController extends BaseUserController
                 ->rules('required');
             $form->hidden('name');
             $form->hidden('username');
-
-            $form->text('name', '账号')->rules('required');
-            $form->text('username', '姓名')->rules('required');
             $form->hidden('avatar');
             $form->hidden('password');
             $form->ignore(['golden_uid']);
