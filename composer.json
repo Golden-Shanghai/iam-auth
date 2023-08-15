@@ -1,6 +1,6 @@
 {
     "name": "ze/iam-auth",
-    "description": "OAuth connect to bamboocloud IAM .",
+    "description": "OAuth SDK",
     "type": "library",
     "keywords": [
         "laravel-admin",
